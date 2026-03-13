@@ -12,9 +12,8 @@ class UploadController extends Controller
         $request->validate([
             'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
         ]);
-
-        // Store here
-
+        $name = $request->file('avatar')->getClientOriginalName();
+        $path = request()->file('avatar')->storeAs('avatars', $name, 'public');
         return back()->with('success', 'Avatar uploadé : ' . $path);
     }
 
