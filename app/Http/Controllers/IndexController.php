@@ -13,6 +13,12 @@ class IndexController extends Controller
 
     public function getPrivateDocument(string $filename)
     {
-        // Write code here
+        $path = 'documents/' . $filename;
+
+        if (! Storage::disk('local')->exists($path)) {
+            abort(404, 'Document introuvable');
+        }
+
+        return Storage::disk('local')->response($path);
     }
 }

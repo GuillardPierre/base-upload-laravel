@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
@@ -12,8 +11,7 @@ class UploadController extends Controller
         $request->validate([
             'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,gif', 'max:2048'],
         ]);
-        $name = $request->file('avatar')->getClientOriginalName();
-        $path = request()->file('avatar')->storeAs('avatars', $name, 'public');
+        $path = $request->file('avatar')->store('avatars', 'public');
         return back()->with('success', 'Avatar uploadé : ' . $path);
     }
 
@@ -22,8 +20,7 @@ class UploadController extends Controller
         $request->validate([
             'pdf' => ['required', 'mimes:pdf', 'max:5120'],
         ]);
-
-        // Store here
+        $path = $request->file('pdf')->store('documents', 'local');
 
         return back()->with('success', 'PDF uploadé : ' . $path);
     }
