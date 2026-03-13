@@ -15,10 +15,10 @@ class IndexController extends Controller
     {
         $path = 'documents/' . $filename;
 
-        if (! Storage::disk('local')->exists($path)) {
+        if (! Storage::exists($path)) {
             abort(404, 'Document introuvable');
         }
 
-        return Storage::disk('local')->response($path);
+        return Storage::response($path);
     }
 }
